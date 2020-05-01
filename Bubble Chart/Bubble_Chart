@@ -1,0 +1,26 @@
+
+#=============
+# Bublle Chart
+#=============
+
+
+symbols(st$Illiteracy,  y = st$Murder, # x 좌표, y 좌표
+        circles = st$Population,  # 반지름의 열
+        inches = 0.3, # 열 크기 
+        fg = "white",    # 테두리 color
+        bg = "red",   # Background Color
+        lwd = 1.5,  # 테두리 두꼐
+        xlab = "xlab",
+        ylab = "ylab",
+        main = "title")
+
+text(st$Illiteracy, st$Murder, # x 좌표 , y 좌표
+     rownames(st), # Text
+     cex = 0.6, # Fonts Size
+     col = "blue")  # Fonts Color
+
+
+#==========
+# Reference
+# Multicampus / 빅데이터 활용을 위한 R프로그래밍 끝내기_중급1  Visuallization, Map, Text Minining 
+#==========
