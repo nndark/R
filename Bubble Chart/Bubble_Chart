@@ -3,6 +3,9 @@
 # Bublle Chart
 #=============
 
+# 3 Variable
+# 3개의 변수의 상관 관계를 표현할때 유용한 차트
+
 
 symbols(st$Illiteracy,  y = st$Murder, # x 좌표, y 좌표
         circles = st$Population,  # 반지름의 열
