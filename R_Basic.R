@@ -110,19 +110,20 @@ summary(data)
 hist(data)
 boxplot(data)
 # - NA, NaN, Null 처리
-# - 얼마나 많은 NA 이 있는 처리 한다
+# 
+
+# - 얼마나 많은 NA 이 있는 확인한다
+# NA 확인
 is.na(data)
+# NA 개수 확인
 sum(is.na(data))
 colSums(is.na(data))
 cumsum(is.na(data))
+# NA 비중 확인
+mean(is.na(data)) 
 
-# - 수동으로 결측치 값을 알고 있어서 수동으로 수정할 수 있따면 가장 좋음
-data2 <- edit(data)
-fix(data)
-# - 결측치가 있다면 해당 열 지워버리기
-# - 데이터가 충분하다면 그냥 지워버려 
-data2 <- na.odmit(data)
-data2 <- data %>% drop_na()
+# 가장 근처에 ㅇ
+
 
 # Dviding Case 
 # - 케이스를 분할하여 분석하는게 때론 효과적일 수 있음
