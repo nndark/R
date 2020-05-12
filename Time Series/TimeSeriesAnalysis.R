@@ -30,4 +30,4 @@ library(HoltWinters)
 # Reference
 #==========
 # Paul Tetor / R Cookbook / 978-596-80915-7
-# https://wikidocs.net/20164 / 9788924067200
+# 금융공학 공부 /  https://wikidocs.net/20164 / 9788924067200

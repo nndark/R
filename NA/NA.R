@@ -1,4 +1,8 @@
-# library
+# 
+
+#========
+# LIBRARY
+#========
 library(naniar) # na package
 library(imputeTS) # na 값 처리
 library(VIM) # NA Visualization
@@ -15,6 +19,7 @@ help(car90)
 head(data)
 tail(data)
 glimpse(data)
+summary(data)
 
 # NA 가 있을까?
 na.fail(data)
@@ -22,7 +27,6 @@ any_na(data)
 anyNA(data)
 na.strings(data)
 help(na.strings)
-??na.strings
 
 # NA 어디에 있을까
 data <- car90
@@ -30,22 +34,21 @@ data[!complete.cases(data),]
 data %>% filter(is.na(Price))
 
 # Count NA 얼마나 있을까
+data <- car90
 sum(is.na(data))
 n_miss(data)
 
 table(is.na(data))
 
 miss_scan_count(data, common_na_strings)
+common_na_strings # na sample
 
 # NA 비중이 얼마나 될까? 
 # Propotion NA 
+data <- car90
 mean(is.na(data))
 prop_miss(data)
 miss_summary(data)
-
-
-# View NA
-is.na(data) #
 
 # NA 요약 보기
 # summary NA
@@ -75,12 +78,19 @@ gg_miss_span(data)
 
 
 #=============
-# NA Data 처리 
+# NA 값 처리 
 #=============
 
-# 결측치가 하나만 있더라도 모두 제거하자
-# Delete ALL NA
+# 결측치 값을 오기입한 수준이고 NA 값 대신 값을 입력할 수 있는 경우 수동으로 수정하자
+# 수정 즉시 반영 되므로 실수를 조심하자
 data <- car90
+edit(data)
+fix(data)
+
+# 결측치 삭제하기 
+# 이상 데이터들이 특정 데이터인 경우가 있을 수 있다. 
+#(예를 들어 설문조사에서 수입을 기입하는 항목의 경우 수입이 너무 적거나 많은 경우 빈칸(NA)값으로 입력되어 있을 수 있다)
+# 따라서 이상 데이터를 제거 시 데이터가 편향될 수 있음을 주의하자
 na.exclude(data)
 na.omit(data)
 data %>% drop_na()
@@ -89,39 +99,34 @@ data %>% drop_na()
 data %>% filter(!is.na(Price))
 data %>% drop_na(Price)
 
-# 이상 데이터들이 특정 데이터인 경우가 많다 따라서 이상 데이터를 무작적 제거 시 데이터가 편향될 수 있음을 주의하자
-
-
-
-# - 수동으로 결측치 값을 알고 있어서 수동으로 수정할 수 있따면 가장 좋음
-data <- car90
-edit(data)
-fix(data)
-
-# 결측치 삭제하기 
-# 결측치 비중이 매우 낮고 삭제해도 괜찮은 상황이라면 삭제해도 무방할 수 있다.
-# 결측치가 편향되는 경우가 있으니 삭제 전 지워
-data <- car90
-na.odmit(data)
-data %>% drop_na()
-
-# NA to Representative Value (mean, median, mode)
 
 # NA to Zero
 # 전부 0으로 바꿔보자
 data <- car90
 data[is.na(data)] <- 0
 
-
 # NA to Zero
+# 상황에 따라서 NA값으로 0으로 대신하는게 필요할 때가 있다 
+# 0으로 변경될 경우 분석에 여러가지 영향을 미칠 수 있음을 잊지말자
+data <- car90
+mean(car90$Price) # NA 값이 있다면 평균 계산 오류 발생 
+mean(car90$Price, na.rm = TRUE) # 평균 계산에 NA 제외하기 
+
 data$Price[is.na(data$Price)] <- 0
-data$Price <- ifelse(is.na(data$Price), 0 , data$Price)
+data$Price <- ifelse(is.na(data$Price), 0 , data$Price) # IF를 사용해서 0으로 처리 가능하다
+
+mean(car90$Price)
+
+# NA to Representative Value (mean, median, mode)
+
+
+
 
 # NA to Mean
 data <- car90
 mean(data$Price)
 data$Price[is.na(data$Price)] <- mean(data$Price, na.rm = TRUE)
-
+data$Price <- ifelse(is.na(data$Price), mean(data$Price, na.rm = TRUE) , data$Price)
 
 # NA to Mediam
 data <- car90

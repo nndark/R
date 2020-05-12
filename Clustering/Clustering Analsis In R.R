@@ -1,20 +1,17 @@
 
 
-#====================
-# Reference
-# 참고
-# DODOMIRA # http://www.dodomira.com/2016/02/20/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-k-means-%ea%b5%b0%ec%a7%91%eb%b6%84%ec%84%9d-k-means-clustering-in-r/
-# glimmssilvar # https://brunch.co.kr/@gimmesilver/32
-#====================
-
 
 #====================
 # Cluster Analysis
 # 군집 분석
 #====================
 
+# Summary
 # Grouping
 # 분류하여 분석한다!
+# 주요 요인을 중심으로 묶어서 그룹핑
+
+
 
 #===============
 # 군집 분석 종류
@@ -36,18 +33,30 @@
 # 모든 유사도
 # 계산량 많음
 
+
+
+
+#========
+# Library
+#========
+library(caret)
+library(factoextra)     # clastering
+library(FactoMineR)     # clastering
+library(NbClust)  
+
+
+
 #===================
 # Customer Segmentation
 # 고객 세분화 
 #==================
 
 
-#install.packages(caret)
-library(caret)
-
 # 그룹핑 분석
 # Data Setting
-set.seed(123)
+
+# 학습 분류
+set.seed(777)
 inTrain <- createDataPartition(y=iris$Species, p=0.7, list=FALSE)
 training <- iris[inTrain,]
 testing <- iris[-inTrain,]
@@ -67,8 +76,7 @@ qplot(Petal.Width,Petal.Length,colour=cluster,data=training)
 
 # 중심의 갯수가 몇개가 적당한지 셋팅하는 방법
 
-install.packages("NbClust")
-library(NbClust)
+
 
 nc <- NbClust(training.data, min.nc=2, max.nc=15, method="kmeans")
 par(mfrow=c(1,1))
@@ -100,3 +108,12 @@ modFit <- train(x=training.data[,-5],
 testing.data<-as.data.frame(scale(testing[-5]))<br>testClusterPred <- predict(modFit,testing.data) <br>table(testClusterPred ,testing$Species)
  
  
+
+
+#==========
+# Reference
+#==========
+
+# DODOMIRA / blog /  http://www.dodomira.com/2016/02/20/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-k-means-%ea%b5%b0%ec%a7%91%eb%b6%84%ec%84%9d-k-means-clustering-in-r/
+# glimmssilvar / blog /  https://brunch.co.kr/@gimmesilver/32
+# ibuyworld / blog / https://m.blog.naver.com/ibuyworld/221219161573

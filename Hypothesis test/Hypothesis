@@ -39,7 +39,8 @@
 
 # p-value (유의확률)
 # 대립가설을 지지하는 방향으로 나올 확률임
-# 
+# probability 확률을 의미하면 "0 ~ 1" (0% ~ 100%) 값으로 표기한다.
+# 아주 쉽게 p값이 매우 낮다는 것은 매우 낮은 확률이라는 것을 의미한다. 
 
 # Significane level (유의수준)
 # α로 표현하며 흔히 0.1, 0.05,  0.01, 0.00 등 작은 값으로 관례적으로 설정하여 매우 낮은 확률로 가정설정한다. 
@@ -119,16 +120,14 @@ C. 단일 표본 t-test : 특정 집단의 평균이 어떤 숫자와 같은지 
 t.test()
 
 
-#=================
+#==========
 # Reference
-# Chae-hyung Ahn
-# Data Analysis for Beginners ISBN:978-89-5566-110-1
-# DODOMIR
-# http://www.dodomira.com/2016/04/02/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-t-test/
-# WIKI
-# https://namu.wiki/w/%EA%B0%80%EC%84%A4
-# https://en.wikipedia.org/wiki/P-value
-#=================
+#==========
 
+# Chae-hyung Ahn / Data Analysis for Beginners ISBN:978-89-5566-110-1
+# DODOMIR / blog / http://www.dodomira.com/2016/04/02/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-t-test/
+# NAMU WIKI / wiki /https://namu.wiki/w/%EA%B0%80%EC%84%A4
+# wikipedia / wiki /https://en.wikipedia.org/wiki/P-value
+# 생새우초밥집 / blog / https://freshrimpsushi.tistory.com/537
 
 
