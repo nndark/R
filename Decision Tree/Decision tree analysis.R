@@ -1,4 +1,15 @@
-Decision tree analysis
+#=======================
+# Decision tree analysis
+#=======================
+
+# 장점
+# 속도가 빠르고 시각화하기 좋음
+
+
+#==============
+# Random Forest
+#==============
+
 
 # http://www.dodomira.com/2016/05/29/564/
 
