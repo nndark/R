@@ -9,8 +9,11 @@
 #    Defintion Problem & Hypothesis 
 #====================================
 
+# Definition
+# Reference
+# http://www.dodomira.com/2016/01/12/%eb%8d%b0%ec%9d%b4%ed%84%b0-%eb%b6%84%ec%84%9d%ec%9d%98-%ec%9c%a0%ed%98%95/
 
-# 문제 해결을 위해서 어떤 방법을 사용할지 미리 예상해볼 수도 있다
+# EDA -> Visullization -> Predict
 
 
 #==========================
@@ -19,7 +22,8 @@
 #==========================
 
 # 필요한 패키지를 설치한다
-# install.package("name")
+# 
+install.package("name")
 
 # 설치한 패키지를 장착한다
 library(name)
@@ -41,54 +45,70 @@ data.xlsx <- read_xlsx("data.xlsx")
 # Sample data
 data <- car90
 
-#=======================
+
 # 2. 데이터 구조 파악
-# - 컬럼 파악, 정의 확인
-#======================= 
-
-# 앞부분 데이터 보기 
-head(data)
-head(data, 30)
-
-# 끝부분 데이터 보기 
-tail(data)
-tail(data, 30)
-
-
-# 단순 구조 보기 
-# 1차원 구조인 경우
-length(data)
-
-# 2차원 구조인 경우
-dim(data)
-
-# 컬럼만 보기
+# - 컬럼 파악, 정의 확인 
 names(data)
-
-# 변수 파악 하기 
 str(data)
 glimpse(data) #df.describe()
-
-
-# 요약 보기
-data <- car90
-summary(data)
-describe(data)
-
-#전체 데이터 통으로 보기
-View(data)
-
-
-
-
-#=============================
+dim(data)
 # - 필요 없는 컬럼은 제거 한다
-#=============================
 data2 <- data[,-(1:3)]
 
 names(data2)
 str(data2)
 glimpse(data2)
+
+#==========
+# 3. 전처리
+#    Data Preprocessing 
+#==========
+
+data <- car90
+
+# Count NA
+sum(is.na(data))
+
+# Prop NA
+mean(is.na(data))
+
+# Find NA
+data(!complete.cases(data))
+
+# Delete ALL NA
+na.omit(data)
+data %>% drop_na()
+
+# NA to Zero
+data$Mileage[is.na(data$Mileage)] <- 0
+
+# NA to Representative Value (mean, median, mode)
+mean <- mean(data$Mileage, na.rm = TRUE)
+data$Mileage[is.na(data$Mileage)] <- mean
+
+
+# NA to Predict Value (rpart, knn, mice)
+
+
+# 중복 확인
+sum(duplicate(data))
+
+# 중복 값 처리
+distinct(data)
+unique(data)
+!duplicate(data)
+
+
+# 다중공선성 확인
+# multicolleniarity
+chart.Correlation(data)
+ggcorr(data)
+
+# 표준화 
+# standardization
+scale(data)
+
+
 
 #==========================
 # 3. 탐색적 데이터 분석 / 데이터 상태 파악 / 기술통계 확인 
@@ -119,9 +139,7 @@ ggplot(data, aes(x = x, y = y) ) + geom_point()
 # 4. 집중경향치를 우선 판단한다  - 데이터 대표가 누구인가를 나타내는 수치 
 #==========================
 # - mean (평균)
-mean(data)
 # - median (중앙치) 순서 가운데 
-median(data)
 # - mode (최빈치)
 
 #==========================
@@ -143,21 +161,19 @@ summary(data)
 hist(data)
 boxplot(data)
 # - NA, NaN, Null 처리
-# 
-
-# - 얼마나 많은 NA 이 있는 확인한다
-
-# NA 확인
+# - 얼마나 많은 NA 이 있는 처리 한다
 is.na(data)
-# NA 개수 확인
 sum(is.na(data))
 colSums(is.na(data))
 cumsum(is.na(data))
-# NA 비중 확인
-mean(is.na(data)) 
 
-# 가장 근처에 ㅇ
-
+# - 수동으로 결측치 값을 알고 있어서 수동으로 수정할 수 있따면 가장 좋음
+data2 <- edit(data)
+fix(data)
+# - 결측치가 있다면 해당 열 지워버리기
+# - 데이터가 충분하다면 그냥 지워버려 
+data2 <- na.odmit(data)
+data2 <- data %>% drop_na()
 
 # Dviding Case 
 # - 케이스를 분할하여 분석하는게 때론 효과적일 수 있음
@@ -168,20 +184,7 @@ mean(is.na(data))
 # 
 #
 # 7. 시각화
-hist(data)
-# plot 그리기
-#   - hist, boxplot, point, col, 기본 plot 
-#   - heatmap, corr
-#   -
-
-#==========
 # 8. 모델링 
-#==========
-
-#. 예측 요인, 제외 요인 고르기
-  
-
-
 # 9. 리포팅 
 #
 # - 
@@ -203,10 +206,3 @@ hist(data)
 중심극한 정리를 따름
 
 
-
-#==========
-# Reference
-#==========
-
-# dodomira / blog / http://www.dodomira.com/2016/01/12/%eb%8d%b0%ec%9d%b4%ed%84%b0-%eb%b6%84%ec%84%9d%ec%9d%98-%ec%9c%a0%ed%98%95/
-# Nykim / Must Learning with R / / https://wikidocs.net/book/4315

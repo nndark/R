@@ -1,0 +1,144 @@
+
+#===========
+# WHAT TO DO
+#===========
+
+
+#==============
+# 분석 연구 과정
+#==============
+
+# 1. Observation (초기 관측)
+#
+#   - 무언가를 관찰하고 호기심을 가진다.
+#   - 사람들이 커피를 주문할떄 추가로 케이크룰 주문하는 점을 발견했다. 
+#   - 공룡은 왜 멸종 했을까?
+#   - 지구는 예전 보다 더 더워졌는가?
+
+# 2. 초기 관찰을 설명할 수 있는 Theory 만든다 (이론 생성)
+#
+#   - 커피는 케이크와 먹을떄 더 행복감이 커진다.
+#   - 경제적 여유가 있을 경우 커피와 케이크를 같이 주문하다.
+#   - 한국는 과거보다 최근 더 더워졌다.
+  
+# 3. Hypothesis (가설 생성)과 가설 예측
+#
+#   - 커피만 마실떄의 행복감과 커피와 케이크를 같이 주문해서 먹을때의 행복감을 비교해본다. 같이 먹을떄 행복감이 올라갈것으로 가설 예측해본다.
+#   - 커피를 주문한 사람들의 경제 데이터를 확인하여 비교한다. 수입이 높을 수록 커피 케이크 동시 주문한다고 가설 예측해본다.
+#   - 년도별 한국 지역들의 온도 데이터를 비교해본다. 년도별 온도 상승할 것이라고 가설 예측해본다.
+
+# 4. Theory(이론) 검증을 위한 Data(자료 수집)
+#
+#   - Variable(변수)를 정해서 데이터를 수집하자
+#   - 좋은 자료를 만들려면 정확한 측정이 필요하다. 
+#     - Measurement error(측정오차)가 있는지
+#     - Validity(타당성-실제 제대로된 환경에서 측정되었는지), reliability(신뢰성-일관되게 측정가능한지 똑같은 상황에서 측정하면 똑같은 값 나오는지)을 확인 한다.
+#   - 대부분의 가설은 2가지 변수로 표현할 수 있는데 원인을 Independent variable(독립변수), 결과를 Dependent variable(종속 변수-원인에 종속되기 떄문)라고 한다.
+#     - 원인과 결과는 발생 시간이 가까우면, 원인이 결과보다 먼저 발생해야 하며, 원인이 발생하지 않으면 결과도 발생하지 않아야 한다, 원인이 존재하면 결과도 존재해야 한다.     
+#   - 자료 조사는 between group design(그룹간 설계) or independent design(독립 설계)로 서로 다른 그룹의 사람들이 실험 조건에 참여하는 방법과 within-subject design(개체내 설계) or repeated measures design(반복측정 설계)라는 같은 참가자를 이용해 독립변수를 조작하는 것
+#     - between group design(그룹간 설계)를 할 경우 참가자에 따라서 IQ등 조건이 다르므로 결과도 달라질 수 있다. 
+#     - within-subject design(개체내 설계)를 하더라도 practice effect(연습 효과), boredom effects(권태효과)때문에 결과가 달라 질 수 있음을 주의하자.
+#      - 이러한 변동 결과를 줄이기 위해  randomization(임의화)를 사용한다. 이럴 경우 다양한 변수 조건들이 고르게 분포되기 때문이다
+#   - 모든 데이터를 다 수집할 수 없으므로 우리는 Sample을 수집한다.
+#   - 표본은 30개 이상이면 크다고 간주하며 Central limit therem(중심극한정리)에 의해서 정규분포를 따르기 떄문이다
+#     - 만약 표본이 30개 이하라면 정규분포와 다른 모양인 t분포를 따를 것이다
+#   -  우리의 가설은 정규분포에 기초한 parametric test(모수적 검정)인 경우가 대다수다 따라서 네가지 기본 가정을 지키는지가 중요함
+#     - 분포의 정규성 : 정규분포를 따르고 있는지 확인한다
+describe() # d
+stat.desc() # 
+#       - histogramdp 에 정규곡선을 추가하여 확인하면 쉽다.
+ggplot(dta, aes()) + 
+	geom_hist() + 
+	stat_funtion(fun = dnorm, args = list(mean =mean(1, na.rm = TRUE, sd = sd(1, na.rm =TRUE))))
+#       - Q-Q plot을 통해서 확ㅇ니한다면 유용할 수 있다
+ggplot(dta, aes()) + stat_qq()
+#        - 시각적인 자료로 보면 
+#     - 분산의 동질성 : variance(분산)이 동일한 모집단에서 비롯되었는지
+#     - 구간 자료 : 변수들이 분석가능한 상식적인 수준으로 작성되었어야 한다 
+#     - 독립성 : 데이터가 독립적으로 수집 되어야 한다. 예를 들어서 수집된 데이터가 중복성을 띈다던지 참가자들이 의논해서 대답한것을 수집한 경우 독립직이지 않다
+
+
+# 5. Data Analysis (자료 분석)
+#   - Data를 수집했다면 Visuallization(시각화)을 통해서 보는것이 도움이 된다
+#   - inferential statistics(추론 통계)를 이용하여 평가해보자
+#   - 우리가 수집한 데이터가 우연으로 발생할 확률 0.05 보다 낮은 수준이라면 Statistically(유의미한)하다고 말할 수 있다. 
+#   - Statistical model(통계적 모형)을 자료에 fit(적합)한지 체크해본다
+#   - Test statistic(검정통계량) 여러 값이 발생하는 빈도를 알 수 있다. 이를 통해서 특정값이 나올떄의 확률을 알 수 있게 된다.  
+#   - 만약 우리가 예상한 가설이 0.05보다 낮다면 Significant(유의한)효과가 있다고 생각할 수 있다.
+#     - 실험에 아주 많은 수의 사람이 쓰였다면 통계적으로 유의하다고 나올 수 있으므로 주의
+#     - Type I error (1종 오류) : 효과가 있다고 믿지만 사실 아주아주 우연했을 수 있다
+#     - Type II error (2종 오류) : 효과가 없지만 우리가 효과가 존재한다고 믿게 되는 경우
+#   -  effect size(효과 크기) :
+#   -  power (검정력) : 
+
+
+
+#=================
+# 주요 용어
+#=================
+
+
+# H0 / null hypothesis (영가설 또는 귀무 가설)
+# The null hypothesis states that a population parameter (such as the mean, the standard deviation, and so on) is equal to a hypothesized value.
+# The null hypothesis is often an initial claim that is based on previous analyses or specialized knowledge.
+
+# 2개 집단 간에 차이가 없으며 차이가 존재한다면 그건 우연이라고 주장하는 가설
+# 기존의 가설로  
+# H1 / alternative hypothesis (대립가설 또는 대안가설) 
+# The alternative hypothesis states that a population parameter is smaller, greater, or different than the hypothesized value in the null hypothesis.
+#  The alternative hypothesis is what you might believe to be true or hope to prove true.
+# 2개 집단 간에 차이가 있으며 그 차이는 우연이 아니라 실제로 다르기 때문이라고 주장하는 가설
+# 그 원인은 하나의 변수 떄문이며 영가설이 틀리다면 대립가설이 진리가 된다.
+
+# Power (검정력)
+# 어떤 통계가 유의미할때 그 유의미성을 발견할 확률인데 보통 효과가 크거나 표본수가 클 수 록 강해진다
+
+# p-value (p-값)
+# p-value tells us how likely it is to get a result like this if the Null Hypothe is true
+# Between 0, 1 value
+# test(검정)은 null hypothesis(영가설)이 옳다고 전제하고 진행, 집단간의 차이를 분석하여 Null Hypothesis(영가설)을 reject(기각)할지 decision(결정)한다.
+# It indicates strong evidence against the null hypothesis, as there is less than a 5% probability the null is correct
+# (and the results are random). Therefore, 
+# we reject the null hypothesis, and accept the alternative hypothesis.
+
+
+# 결과 해설
+# 검정 결과가 유의미하다는 것은 결과가 우연으로 나왔을 확률을 무시할 정도로 매우 낮다는 것이다.
+
+
+# p-value (유의확률)
+# 대립가설을 지지하는 방향으로 나올 확률임
+# 
+
+# Significane level (유의수준)
+# α로 표현하며 흔히 0.1, 0.05,  0.01, 0.00 등 작은 값으로 관례적으로 설정하여 매우 낮은 확률로 가정설정한다. 
+
+
+# one-sided test (단측 검정)
+# 방향이 결정된 경우로 예를 들어 새로운 치료약물이 기존 약과 비교하여 더 좋은가? (신약 > 기존약?)를 검증할때 사용
+
+# two-sided test (양측 검정)
+# 방향을 따지지 않는 경우 예를 들어 새로운 치료약이 기존 약과 차이가 있는가? ( 신약 > 기존약 & 신약 < 기존약)
+
+
+
+
+# 가설 검증 종류 
+# 가설 검증은 흔히 z-test, t-test, F-test, 카이제곱 test 등으로 진행된다.
+
+
+
+
+
+#===========
+# Reference
+#===========
+
+# Andy Field / Discovering Statistics Using R / ISBN 97-11-88621-36-1
+# Chae-hyung Ahn /  Data Analysis for Beginners / ISBN 978-89-5566-110-1
+# DODOMIR / Blog /  http://www.dodomira.com/2016/04/02/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-t-test/
+# NAMU WIKI / WIKI /  https://namu.wiki/w/%EA%B0%80%EC%84%A4
+# WIKI pedia / WIKI / https://en.wikipedia.org/wiki/P-value
+# MINITAB / Support / https://support.minitab.com/en-us/minitab/19/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-hypothesis-test/
+	
+

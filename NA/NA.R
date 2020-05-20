@@ -10,6 +10,9 @@ library(Hmisc)
 library(DMwR)
 library(dplyr)
 library(rpart) # na data
+library(RANN)
+library(zoo)
+library(DMwR) # na data
 
 # Importing Data
 data <- car90
@@ -117,34 +120,40 @@ data$Price <- ifelse(is.na(data$Price), 0 , data$Price) # IF를 사용해서 0�
 
 mean(car90$Price)
 
-# NA to Representative Value (mean, median, mode)
-
-
-
-
 # NA to Mean
 data <- car90
-mean(data$Price)
+mean(data$Price, na.rm = TRUE)
 data$Price[is.na(data$Price)] <- mean(data$Price, na.rm = TRUE)
 data$Price <- ifelse(is.na(data$Price), mean(data$Price, na.rm = TRUE) , data$Price)
 
-# NA to Mediam
+# NA to Median
 data <- car90
-median(data$Price)
+median(data$Price, na.rm =TRUE)
 data$Price[is.na(data$Price)] <- median(data$Price, na.rm = TRUE)
+data$Price <-  centralImputation(data[17])
+centralImputation(data)  # NA 한번에 다 처리 
 
+# NA to forward/backward value
+data <- car90
+data$Price <- na.locf0(data$Price, fromLast = FALSE)
+data$Price <- na.locf0(data$Price, fromLast = TRUE) 
 
-# NA 대체 값 추천 받지
-tsoutliers(data$Price) # forecast 
+# NA 예측값으로 넣기 - 시계열 (forecast) 
+data <- car90
 tsclean(data$Price)
-
-# NA to 추정값 # forecast 
-na.interp(data$Mileage)# forecast 
-
-# NA 값 바로 추정값으로 처리하기
-tsclean(data$Price)
+data$Price <- tsclean(data$Price)
 data$Price <- data$Price %>% tsclean()
 
+# NA to 추정값 - 시계열  (forecast)
+data <- car90
+na.interp(data$Mileage)# forecast 
+data$Price <- na.interp(data$Price)
+data$Price <- data$Price %>% na.interp()
+
+# NA to k-NN 가까운 이웃 값으로 바로 대체하기 
+data <- car90
+knnImputation(data)
+data <- knnImputation(data)
 
 # To NA
 # 특정 값을 NA로 바꾸자
@@ -170,3 +179,4 @@ replace_with_if()
 # blog / https://m.blog.naver.com/tjdudwo93/221142961499
 # 지그드시 / blog / http://blog.naver.com/liberty264/220992831831
 # Jin-Hoon An/ RPubs / https://rpubs.com/jmhome/R_data_processing
+# datadoctor / homepage / https://datadoctorblog.com/

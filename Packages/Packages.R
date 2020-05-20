@@ -7,19 +7,35 @@
 # Name
 #==========
 
+#===============
+# Data Standards
+#===============
 
-
+#=============
+# 문제 정의
 #==============
+
+#=======
 # Update
-#==============
+#=======
+
+
 version
 #updateR()
+#update.packages()
+#remove.packages() 
+
+#install.packages()
+#library()
+
 
 #==============
 # Options
 #==============
 options(encoding = 'UTF-8')
 options("scipen" = 100)
+win.graph(width = 7.0, height = 5.5)
+fig.asp = 0.618
 
 #==============
 # Data Location
@@ -29,20 +45,24 @@ getwd()
 search()
 now()
 
-#install.packages("ggproto")
 
-#=============================================================================
-#
-#https://cran.rstudio.com/web/packages/available_packages_by_date.html
-#
-#=============================================================================
+#==============
+# functions
+#==============
+
+mode = function(x){ 
+  ux=unique(x) 
+  ux[which.max(tabulate(match(x,ux)))]
+}
+
+
 
 #=================
 # Packages Library
 #=================
 
-
 #a
+library(actuaryr) # calendar Visuallization
 library(arules)
 library(arulesViz)
 library(arules) # classification from raw text
@@ -100,6 +120,7 @@ library(modelr)    # modeling
 #o
 #p
 library(party) # Decision Tress
+library(parsnip)
 library(purrr)
 library(PerformanceAnalytics) # Visuallization
 library(productplots)
@@ -116,15 +137,27 @@ library(randomForest)
 library(rattle) # Decision Tress
 library(RColorBrewer) #Color Plalettes 
 library(RPostgreSQL)
+library(reticulate) # R Interface to Python
+
 #s
+library(sandwich)
 library(stringr)
 library(swirl)
 library(shiny)
 library(summarytools) # summary
+library(SSLR) # Regression modeling
+library(showtext) # ggplot Fonts
+font_add_google('Noto Sans KR', 'notosanskr')
+showtext_auto()
+
 #t
 library(tm)       # Text Mining
 library(tidyverse)
 library(tidyr)     # Data Wragling
+library(tidymodels) # Regression Modeling
+library(treemap)  # Data Visuallization 
+library(tensorflow) # tensorflow
+
 #u
 library(usethis) ## Beyond ggplot
 
@@ -135,8 +168,11 @@ library(wesanderson) #Color Plalettes
 
 #x
 library(XLConnect) # Data Importing -  Excel Connector for R
+library(extrafont) # font
 
 #y
+
+library(yardstick)
 #z
 
 ##
