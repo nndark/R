@@ -155,6 +155,9 @@ data <- car90
 knnImputation(data)
 data <- knnImputation(data)
 
+
+#======================
+
 # To NA
 # 특정 값을 NA로 바꾸자
 data <- car90

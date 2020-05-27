@@ -4,6 +4,8 @@
 
 
 data("GNI2014")
+
+
 head(GNI2014)
 treemap(GNI2014,
         index=c("continent", "iso3"),

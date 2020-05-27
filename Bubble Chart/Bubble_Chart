@@ -3,6 +3,11 @@
 # Bublle Chart
 #=============
 
+
+#========
+# Library
+#========
+
 # 3 Variable
 # 3개의 변수의 상관 관계를 표현할때 유용한 차트
 
@@ -12,7 +17,7 @@ symbols(st$Illiteracy,  y = st$Murder, # x 좌표, y 좌표
         inches = 0.3, # 열 크기 
         fg = "white",    # 테두리 color
         bg = "red",   # Background Color
-        lwd = 1.5,  # 테두리 두꼐
+        lwd = 1.5,    # 테두리 두꼐
         xlab = "xlab",
         ylab = "ylab",
         main = "title")
