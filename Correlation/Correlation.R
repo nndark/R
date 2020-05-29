@@ -123,6 +123,9 @@ cor(data$Price, data$Luggage, method = "kendall")
 library(polycor)
 polyserical(data$1 , data$2)
 
+# 시각화
+chart.Correlation(data, histogram = TRUE, pch = 19)
+
 #==============
 # 분석 결과 해석
 #==============
