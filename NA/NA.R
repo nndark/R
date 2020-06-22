@@ -1,4 +1,8 @@
-# 
+
+# R에서는 결측치를 NA(Not Applicable 또는 Not Available)라고 표시된다. 
+# 데이터에 NA값이 없다면 좋겠지만
+# 만약 1개의 NA값이 있다면 데이터 분석에 많은 문제가 생긴다.
+# NA값을 처리하고 본격적인 데이터 분석을 해보자.
 
 #========
 # LIBRARY
@@ -14,7 +18,9 @@ library(RANN)
 library(zoo)
 library(DMwR) # na data
 
+#===============
 # Importing Data
+#===============
 data <- car90
 
 # Data Check
@@ -66,18 +72,30 @@ miss_case_summary(data)
 # Visualization NA
 data <- car90
 
+# 한번에 보기
 vis_miss(data)
 vis_miss(data, cluster=TRUE)
+data %>% vis_miss
 
 gg_miss_var(data) #naniar
-gg_miss_var_cumsum(data)
+data %>% gg_miss_var()
 
+gg_miss_var_cumsum(data)
+data %>% gg_miss_var_cumsum()
 
 gg_miss_case(data)
+data %>% gg_miss_case()
+
+
 gg_miss_case_cumsum(data)
+data %>% gg_miss_case_cumsum(data)
 
 gg_miss_upset(data)
-gg_miss_span(data)
+data %>% gg_miss_upset()
+#gg_miss_span(data)
+
+gg_miss_span(data, Country, span_every = 10)
+gg_miss_span(data, Type, span_every = 10, facet = Country)
 
 
 #=============
@@ -98,47 +116,77 @@ na.exclude(data)
 na.omit(data)
 data %>% drop_na()
 
+
+#===========
 # Delete NA
+#===========
+
 data %>% filter(!is.na(Price))
 data %>% drop_na(Price)
 
-
+#===========
 # NA to Zero
-# 전부 0으로 바꿔보자
-data <- car90
-data[is.na(data)] <- 0
+#===========
 
+
+#===========
 # NA to Zero
+#===========
+
 # 상황에 따라서 NA값으로 0으로 대신하는게 필요할 때가 있다 
 # 0으로 변경될 경우 분석에 여러가지 영향을 미칠 수 있음을 잊지말자
-data <- car90
-mean(car90$Price) # NA 값이 있다면 평균 계산 오류 발생 
-mean(car90$Price, na.rm = TRUE) # 평균 계산에 NA 제외하기 
 
+# 전부 0으로 바꿔보자
+data <- car90
+
+data[is.na(data)] <- 0
 data$Price[is.na(data$Price)] <- 0
 data$Price <- ifelse(is.na(data$Price), 0 , data$Price) # IF를 사용해서 0으로 처리 가능하다
 
+
+
 mean(car90$Price)
 
+
+#===========
 # NA to Mean
+#===========
+
+data <- car90
+
+mean(car90$Price) # NA 값이 있다면 평균 계산 오류 발생 
+mean(car90$Price, na.rm = TRUE) # 평균 계산에 NA 제외하기 
+
 data <- car90
 mean(data$Price, na.rm = TRUE)
 data$Price[is.na(data$Price)] <- mean(data$Price, na.rm = TRUE)
 data$Price <- ifelse(is.na(data$Price), mean(data$Price, na.rm = TRUE) , data$Price)
 
+#=============
 # NA to Median
+#=============
+
 data <- car90
 median(data$Price, na.rm =TRUE)
 data$Price[is.na(data$Price)] <- median(data$Price, na.rm = TRUE)
 data$Price <-  centralImputation(data[17])
 centralImputation(data)  # NA 한번에 다 처리 
 
+#=============================
 # NA to forward/backward value
-data <- car90
-data$Price <- na.locf0(data$Price, fromLast = FALSE)
-data$Price <- na.locf0(data$Price, fromLast = TRUE) 
+#=============================
 
+# 시계열 데이터에서 유용하게 사용할 수 있다.
+
+data <- car90
+
+data$Price <- na.locf0(data$Price, fromLast = FALSE) # forward value를 가져와서 NA 값을 바꿔준다.
+data$Price <- na.locf0(data$Price, fromLast = TRUE)  # backward value를 가져와서 NA 값을 바꿔준다.
+
+
+#=====================================
 # NA 예측값으로 넣기 - 시계열 (forecast) 
+#=====================================
 data <- car90
 tsclean(data$Price)
 data$Price <- tsclean(data$Price)

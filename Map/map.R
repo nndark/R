@@ -48,6 +48,7 @@ map <- get_googlemap(center = location,# 경도 위도 좌표 지정
 # 데이터 항목 추가
 # ggplot2를 활용해서 map 위에 데이터를 표시 할 수 있음.
 # 좌표를 추가하는 것을 잊지 말 것
+# as.data.frame 을 사용한 후에 ggmap 에 붙이기
 
 
 #==========
