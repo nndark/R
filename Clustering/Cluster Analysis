@@ -1,6 +1,7 @@
 
 
 #=============
+# Cluster Analysis
 # 군집분석 방법
 #============= 
 
@@ -52,19 +53,108 @@ mean(dist(a1, b1))
 #========
 # Library
 #========
+
+library(class)
+library(cluster)
 library(caret)
 library(factoextra)     # clustering
 library(FactoMineR)     # clustering
 library(NbClust)  
+library(cvTools)
 
 #========
 # 분류분석
 #========
+
 # kmeans
+# 임의 k개의 점을 찍고 해당 점과 가까운 군집을 거리로 자동적으로 계산을 반복하여 군집 중심점을 찾아 군집을 분류하는 방법.
+# 반복계산으로 계산량이 많음. 
+# 자료의 범위가 큰 변수가 있다면 거리 계산에 더 큰 영향을 미칠 수 있으므로 표준화하여 거리를 계산해야 함.
+scale() # 표준화
 
+# 아이리스로 실습해보기
+data <- iris[,1:4]
+data
 
+# 3개로 군집화 하기
+fit <- kmeans(data, 3)
+fit
+
+# 군집의 중심점 확인하기
+fit$centers
+
+# Visualization
+clusplot(data, 
+         fit$cluster,
+         color = TRUE, # 군집 컬러 여부
+         shade = TRUE,  # 군집 빗금 여부
+         labels = 4,  # 라벨 설정 (0,1,2,3,4)
+         lines = 0  # 중심점 연결 여부 (0,1)
+         )
 
 # Elbow method
+
+#==============
+# k-최근점접 분류
+#==============
+
+
+# 적절한  k값은 어떻게 정하는 가?
+# 1. 1~7 적절히 해보고 가장 높은 값을 선택
+# 2. 루트 관측값보다는 작아야함 함
+
+
+# 학습 분류
+set.seed(777)
+
+# iris에서 70% 가져오기 
+part <- createDataPartition(y=iris$Species, p=0.7, list= FALSE)
+part
+
+# 학습 데이터 설정
+train <- iris[part,]
+train.set <- train[,c(1:4)] 
+dim(train.set)
+head(train.set)
+
+# 학습 데이터의 그룹 정보
+train.species <- train[,5]
+factor(train.species)
+# 테스트 데이터 설정
+test <- iris[-part,]
+test.set <- test[,c(1:4)]
+dim(test.set)
+head(test.set)
+
+# 테스트 데이터의 그룹 정보
+test.species <- test[,5]
+factor(test.species)
+
+#knn() 사용 하기 
+pred <- knn(train.set, test.set, train.species, k = 2, prob = TRUE)
+pred <- knn(train.set, test.set, train.species, k = 3, prob = TRUE)
+pred <- knn(train.set, test.set, train.species, k = 4, prob = TRUE)
+pred <- knn(train.set, test.set, train.species, k = 5, prob = TRUE)
+
+pred
+attributes(.Last.value)
+
+# 예측 정확도 구하기
+mean(pred == test.species)
+
+pred
+test.species
+
+# 예측 비교 요약
+table(pred, test.species)
+
+
+#========================
+# K-fold cross validation
+#========================
+
+# 훈련용과 테스트용 데이터를 어떻게 나누어 졌는가에 따라서 모델의 성능이 달라질 수 있음
+# 
 
 #===================
 # Customer Segmentation
@@ -78,9 +168,9 @@ library(NbClust)
 # 학습 분류
 set.seed(777)
 
-inTrain <- createDataPartition(y=iris$Species, p=0.7, list=FALSE)
-training <- iris[inTrain,]
-testing <- iris[-inTrain,]
+Train <- createDataPartition(y=iris$Species, p=0.7, list=FALSE)
+training <- iris[Train,]
+testing <- iris[-Train,]
 
 training.data <- scale(training[-5])
 summary(training)
@@ -131,6 +221,7 @@ testing.data<-as.data.frame(scale(testing[-5]))<br>testClusterPred <- predict(mo
 # Reference
 #==========
 
+# 신경진 / 빅데이터 활용을 위한 R프로그래밍 끝내기_중급2(회귀분석, 군집화와 분류, 데이터 분석 사례)
 # ibuyworld / blog / https://m.blog.naver.com/ibuyworld/221219161573
 # DODOMIRA / blog /  http://www.dodomira.com/2016/02/20/r%ec%9d%84-%ec%82%ac%ec%9a%a9%ed%95%9c-k-means-%ea%b5%b0%ec%a7%91%eb%b6%84%ec%84%9d-k-means-clustering-in-r/
 # glimmssilvar / blog /  https://brunch.co.kr/@gimmesilver/32
