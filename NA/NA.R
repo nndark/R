@@ -117,16 +117,13 @@ na.omit(data)
 data %>% drop_na()
 
 
+
 #===========
 # Delete NA
 #===========
 
 data %>% filter(!is.na(Price))
 data %>% drop_na(Price)
-
-#===========
-# NA to Zero
-#===========
 
 
 #===========
@@ -146,6 +143,14 @@ data$Price <- ifelse(is.na(data$Price), 0 , data$Price) # IF를 사용해서 0�
 
 
 mean(car90$Price)
+
+
+#===========
+# Replace NA
+#===========
+data <- car90
+
+data %>% replace_na()
 
 
 #===========
