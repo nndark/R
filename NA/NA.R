@@ -137,8 +137,13 @@ data %>% drop_na(Price)
 data <- car90
 
 data[is.na(data)] <- 0
+
+# Price 가 NA 인 경우 0으로 바꿔보자
 data$Price[is.na(data$Price)] <- 0
 data$Price <- ifelse(is.na(data$Price), 0 , data$Price) # IF를 사용해서 0으로 처리 가능하다
+
+data <- data %>% replace_na(list(Price=0))
+
 
 
 

@@ -19,19 +19,29 @@ data <- car90
 glimpse(data)
 head(data)
 
+# Select column
+data %>% select(id)
+data[,1]
+
 # column name 수정
 data <- data %>% dplyr::rename
 
-# spread
+# joining Table
+
+# left_join
+join.data <- left_join(data, data, by = "id")
+join.data <- data %>% left_join(data, by = "id")
+
+
+# right_join
+join.data <- right_join(data, data)
+
+
+# Long to Wide
 data %>% spread()
 
-# long
-data %>% long()
+# Wide to Long
+data %>% melt()
 
 # mutate
 data %>% mutate ( price )
-
-# group_by
-
-# left_join
-join.data <- left_join(data, data)

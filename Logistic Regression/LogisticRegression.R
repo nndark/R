@@ -53,9 +53,29 @@ round(pred, 0)
 # 기존 아이리스 기준 레벨로 다시 확인하기 
 levels(iris$Species)[pred]
 
-#====================
+
+# 테스트셋의 실제 정답설정
+answer <- as.integer(iris$Species)
+answer <- answer[1:100]
+answer
+  
+# 테스트셋 기존 모델로 예측하기
+pred <- predict(mod, test)
+# 테스트셋 라운드 함수로 정수로 전환
+pred <- round(pred, 0)
+
+# 예측 되었는지 확인
+pred == answer
+
+# 예측 정확도 계산
+mean(pred == answer)
+# 100 개 중 98개를 맞춤. 2개 틀림
+# 모델을 개선해서 정확도를 올리거나 이 모델을 그냥 사용한다.
+# 몇가지 모델을 만든 이후에 정확도가 높은걸 사용하자 
+
+#==========
 # Reference
-#  
+#==========
+
 # 신경진 / 빅데이터 활용을 위한 R프로그래밍 끝내기_중급2(회귀분석, 군집화와 분류, 데이터 분석 사례)
 # DODOMIRA /  http://www.dodomira.com/2016/02/12/logistic-regression-in-r/
-#====================
