@@ -1,0 +1,10 @@
+
+
+#========
+# LIBRARY
+#========
+
+library(stringr)
+
+# Del Text
+data$col1 <-  str_replace(data$col1, "text", "")
