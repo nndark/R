@@ -1,0 +1,49 @@
+
+
+#========
+# LIBRARY
+#========
+
+library(stringr)
+
+# 1개 문자 삭제
+str_remove(data, "ABC")
+
+# 특정 문자 전체 삭제
+str_remove_all(data, "ABC")
+
+# 특수 문자 전체 삭제
+str_remove_all(data, "[[:punct:]]") # . : [ < @ #  ^ + - [ _ ~ < $
+
+# Space 삭제
+str_remove_all(data, "[[:space:]]")
+
+# Blacnk 삭제
+str_remove_all(data, "[[:blank:]]") # Space & Tab
+
+# 숫자 삭제
+str_remove_all(data, "[[:digit:]]") # Space & Tab
+
+# 문자 삭제
+str_remove_all(data, "[[:alpha:]]") # Space & Tab
+
+# 숫자와 문자 모두 삭제
+str_remove_all(data, "[[:alnum:]]") # Space & Tab
+
+# 소문자 삭제
+str_remove_all(data, "[[:lower:]]") # Space & Tab
+
+# 대문자 삭제
+str_remove_all(data, "[[:upper:]]") # Space & Tab
+
+
+# 문자 대신 바꾸기
+data$col1 <-  str_replace(data$col1, "text", "")
+
+# 셀 합치기
+unite(data,
+   col = "New col",
+   col1 , col2,
+   sep = "_" # 구분자 추가하기
+   remove = TRUE # 합쳐진 셀 삭제 여부FALSE
+  )

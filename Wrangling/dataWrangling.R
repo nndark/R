@@ -1,5 +1,5 @@
 #===============
-# Data Wrangling 
+# Data Wrangling
 #===============
 
 # 실제 데이터 전처리는 데이터 분석 업무 시간의 절반 이상을 차지할 만큼 많은 시간이 필요하다.
@@ -12,8 +12,9 @@ library(tidyverse)
 library(dplyr)
 library(car90)
 
+
 #importing data
-data <- car90 
+data <- car90
 
 #data Check
 glimpse(data)
