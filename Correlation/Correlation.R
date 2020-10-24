@@ -73,6 +73,12 @@ cor.test(data$Price, data$Luggage)
 cor(data$Price, data$Tank)
 cor.test(data$Price, data$Tank)
 
+# 한번에 보자
+data <- car90
+data %>% keep(is.numeric) %>% ggpairs()
+
+
+
 #==============
 # Pearson's correlation
 # 상관 계수 해석

@@ -45,3 +45,17 @@ data %>% melt()
 
 # mutate
 data %>% mutate ( price )
+
+
+# string replace
+
+data <- car90
+unique(data$Country)
+data$Country <- data$Country %>% str_replace("Japan", "일본")
+data$Country <- data$Country %>% str_replace("Korea", "한국")
+data$Country <- data$Country %>% str_replace("Germany", "독일")
+
+#filtering
+data2 <- data %>% filter(Country == "한국"|
+                         Country == "일본"|
+                         Country == "독일")

@@ -18,9 +18,12 @@ plot(data, pch = 16)
 
 # incom 회귀식 작성
 mod <- lm(income ~ education + presitge + women, data = data)
+mod2 <- lm(income ~., data = data) # 전체 다 사용 하기
 
 # summary
 summary(mod)
+summary(mod2)
+
 # 해석
 # p-value : 0.05보다 낮다면 유의미하다고 결로
 # R-squared : 해석력을 의미하며 모델이 얼마나 많은 부분을 설명할 수 있는지 말해줌.
