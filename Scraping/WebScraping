@@ -1,7 +1,9 @@
 
-#======== LIBRARY ========
+# ======== LIBRARY ========
 # install.packages("XML")
 library(XML)
+library(httr)
+library(stringr)
 
 
 
@@ -9,13 +11,21 @@ library(XML)
 # 원하는 UR에서 해당 페이지 우 클릭 검사로 특정 tag 언어를 가져올 수 있음
 
 # 순서
-# 1. URL 선택
+# 1. 쿠팡 URL 선택
 # 2. 웹 문서 추출 : htmlParse()
 # 3. 태그 추출 : xpathSapply()
 
 # Coupang Lego
-url <- "http://www.coupang.com/np/search?component=&q=%EB%A0%88%EA%B3%A0&channel=user" # URL 가져오기
+url <- "http://www.coupang.com/np/search?component=&q=레고&channel=user" # URL 가져오기
 doc <- htmlParse(url, encoding = "UTF-8")
 
+
+# Poduct Name
+Product_Name <- xpathSApply(doc, "//ul[@id='productList']//div[@class='name']" ,xmlValue) # 다양한 코드 생략 바로 ul 찾아서  id productList 가져오 다시  생략하고 div에서 class  name 가져오기
+Product_Name
+
+# Poduct Price
+Product_Price <- xpathSApply(doc, "//ul[@id = 'productList]//strong[@class='price-value]", xmlValue)
+Product_Price
 # ========== Reference ==========
 # 인공지능(AI) 프로그래밍_Machine Learning(머신러닝)을 위한 데이터처리 Part.1
